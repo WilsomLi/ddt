@@ -214,6 +214,12 @@ namespace LuaFramework {
                 return "file://" + Application.streamingAssetsPath + "/";
         }
 
+		public static string GetAssetPath(string assetName) {
+			string path = "";
+			AssetDatabase.FindAssets ();
+			return path;
+		}
+
         /// <summary>
         /// 取得行文本
         /// </summary>

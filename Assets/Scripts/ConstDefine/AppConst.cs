@@ -28,6 +28,7 @@ namespace LuaFramework {
         public const string LuaTempDir = "Lua_Tmp/";                    //临时目录
         public const string AppPrefix = AppName + "_";              //应用程序前缀
         public const string ExtName = ".unity3d";                   //素材扩展名
+		public const string PrefabExt = ".prefab";
         public const string AssetDir = "StreamingAssets";           //素材目录 
         public const string WebUrl = "http://localhost:6688/";      //测试更新地址
 

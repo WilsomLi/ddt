@@ -248,6 +248,10 @@ using LuaFramework;
 using LuaInterface;
 using UObject = UnityEngine.Object;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace LuaFramework {
     public class ResourceManager : Manager {
         private string[] m_Variants = { };
@@ -277,7 +281,8 @@ namespace LuaFramework {
         /// </summary>
         public T LoadAsset<T>(string abname, string assetname) where T : UnityEngine.Object {
 #if UNITY_EDITOR 
-			
+			string path = Util.GetAssetPath(assetname+AppConst.PrefabExt);
+			return AssetDatabase.LoadAssetAtPath<T>(path);
 #else
             abname = abname.ToLower();
             AssetBundle bundle = LoadAssetBundle(abname);
