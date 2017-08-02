@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 120159625
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 354f987d871fd0733d0b80f58371eb0f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 21f0dc8ebad690f009368069428e0a1a
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Examples/Textures/Prompt/1.png
+Dependencies: []
