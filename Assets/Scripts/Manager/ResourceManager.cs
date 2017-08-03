@@ -63,8 +63,8 @@ namespace LuaFramework {
                 return abName;
             }
             abName = abName.ToLower();
-            if (!abName.EndsWith(AppConst.ExtName)) {
-                abName += AppConst.ExtName;
+            if (!abName.EndsWith(AppConst.BundleExt)) {
+                abName += AppConst.BundleExt;
             }
             if (abName.Contains("/")) {
                 return abName;
@@ -279,9 +279,9 @@ namespace LuaFramework {
         /// <summary>
         /// 载入素材
         /// </summary>
-        public T LoadAsset<T>(string abname, string assetname) where T : UnityEngine.Object {
-#if UNITY_EDITOR 
-			string path = Util.GetAssetPath(assetname+AppConst.PrefabExt);
+		public T LoadAsset<T>(string abname, string assetname, string ext) where T : UnityEngine.Object {
+#if UNITY_EDITOR && ! USE_ASSETBUNDLE
+			string path = Util.GetAssetPath(assetname+ext);
 			return AssetDatabase.LoadAssetAtPath<T>(path);
 #else
             abname = abname.ToLower();
@@ -294,7 +294,7 @@ namespace LuaFramework {
             abName = abName.ToLower();
             List<UObject> result = new List<UObject>();
             for (int i = 0; i < assetNames.Length; i++) {
-                UObject go = LoadAsset<UObject>(abName, assetNames[i]);
+				UObject go = LoadAsset<UObject>(abName, assetNames[i],AppConst.PrefabExt);
                 if (go != null) result.Add(go);
             }
             if (func != null) func.Call((object)result.ToArray());
@@ -306,8 +306,8 @@ namespace LuaFramework {
         /// <param name="abname"></param>
         /// <returns></returns>
         public AssetBundle LoadAssetBundle(string abname) {
-            if (!abname.EndsWith(AppConst.ExtName)) {
-                abname += AppConst.ExtName;
+            if (!abname.EndsWith(AppConst.BundleExt)) {
+                abname += AppConst.BundleExt;
             }
             AssetBundle bundle = null;
             if (!bundles.ContainsKey(abname)) {

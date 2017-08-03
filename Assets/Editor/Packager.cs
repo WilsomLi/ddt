@@ -103,7 +103,7 @@ public class Packager {
         string streamDir = Application.dataPath + "/" + AppConst.LuaTempDir;
         if (!Directory.Exists(streamDir)) Directory.CreateDirectory(streamDir);
 
-        string[] srcDirs = { CustomSettings.luaDir, CustomSettings.FrameworkPath + "/ToLua/Lua" };
+		string[] srcDirs = { CustomSettings.luaDir, CustomSettings.FrameworkPath + "/ToLua/Lua" };
         for (int i = 0; i < srcDirs.Length; i++) {
             if (AppConst.LuaByteMode) {
                 string sourceDir = srcDirs[i];
@@ -128,12 +128,12 @@ public class Packager {
         for (int i = 0; i < dirs.Length; i++) {
             string name = dirs[i].Replace(streamDir, string.Empty);
             name = name.Replace('\\', '_').Replace('/', '_');
-            name = "lua/lua_" + name.ToLower() + AppConst.ExtName;
+            name = "lua/lua_" + name.ToLower() + AppConst.BundleExt;
 
             string path = "Assets" + dirs[i].Replace(Application.dataPath, "");
             AddBuildMap(name, "*.bytes", path);
         }
-        AddBuildMap("lua/lua" + AppConst.ExtName, "*.bytes", "Assets/" + AppConst.LuaTempDir);
+        AddBuildMap("lua/lua" + AppConst.BundleExt, "*.bytes", "Assets/" + AppConst.LuaTempDir);
 
         //-------------------------------处理非Lua文件----------------------------------
         string luaPath = AppDataPath + "/StreamingAssets/lua/";
@@ -161,11 +161,11 @@ public class Packager {
         string resPath = AppDataPath + "/" + AppConst.AssetDir + "/";
         if (!Directory.Exists(resPath)) Directory.CreateDirectory(resPath);
 
-        AddBuildMap("prompt" + AppConst.ExtName, "*.prefab", "Assets/Examples/Builds/Prompt");
-        AddBuildMap("message" + AppConst.ExtName, "*.prefab", "Assets/Examples/Builds/Message");
+        AddBuildMap("prompt" + AppConst.BundleExt, "*.prefab", "Assets/Examples/Builds/Prompt");
+        AddBuildMap("message" + AppConst.BundleExt, "*.prefab", "Assets/Examples/Builds/Message");
 
-        AddBuildMap("prompt_asset" + AppConst.ExtName, "*.png", "Assets/Examples/Textures/Prompt");
-        AddBuildMap("shared_asset" + AppConst.ExtName, "*.png", "Assets/Examples/Textures/Shared");
+        AddBuildMap("prompt_asset" + AppConst.BundleExt, "*.png", "Assets/Examples/Textures/Prompt");
+        AddBuildMap("shared_asset" + AppConst.BundleExt, "*.png", "Assets/Examples/Textures/Shared");
     }
 
     /// <summary>
@@ -222,7 +222,7 @@ public class Packager {
         StreamWriter sw = new StreamWriter(fs);
         for (int i = 0; i < files.Count; i++) {
             string file = files[i];
-            string ext = Path.GetExtension(file);
+//            string ext = Path.GetExtension(file);
             if (file.EndsWith(".meta") || file.Contains(".DS_Store")) continue;
 
             string md5 = Util.md5file(file);
@@ -328,25 +328,5 @@ public class Packager {
         }
         AssetDatabase.Refresh();
     }
-    
-    [MenuItem("Custom/Android/Build Monitor",false,15)]
-    public static void BuildMonitorAndroid()
-    {
-        //BuildLuaResource.BuildLua(false,BuildTarget.Android);
-        PlayerSettings.SetScriptingDefinesSymbolsForGroup(BuildTargetGroup.Android,"UNITY_3D;RES_USE_ASSEtBUNDLE");
-        PlayerSettings.SetUseDefaultGraphicsAPI(BuildTarget.StandaloneWindows,false);
-        UnityEngine.Rendering.GraphicsDeviceType[] api = new UnityEngine.Rendering.GraphicsDeviceType[3];
-        api[1] = UnityEngine.Rendering.GraphicsDeviceType.OpenGLES2;
-        api[1] = UnityEngine.Rendering.GraphicsDeviceType.Direct3D11;
-        api[1] = UnityEngine.Rendering.GraphicsDeviceType.Direct3D9;
-        PlayerSettings.SetGraphicsAPIs(BuildTarget.StandaloneWindows,api);
-    }
-    
-    [MenuItem("Custom/Android/Editor",false,15)]
-    public static void BuildMonitorEditor()
-    {
-        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android,"UNITY_3D")   ;
-        PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.StandaloneWindows,true);
-    }
-        
+     
 }

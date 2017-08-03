@@ -24,10 +24,10 @@ namespace LuaFramework {
         /// <param name="type"></param>
         public void CreatePanel(string name, LuaFunction func = null) {
             string assetName = name + "Panel";
-            string abName = name.ToLower() + AppConst.ExtName;
             if (Parent.Find(name) != null) return;
 
 #if ASYNC_MODE
+			string abName = name.ToLower() + AppConst.BundleExt;
             ResManager.LoadPrefab(abName, assetName, delegate(UnityEngine.Object[] objs) {
                 if (objs.Length == 0) return;
                 GameObject prefab = objs[0] as GameObject;
@@ -45,7 +45,7 @@ namespace LuaFramework {
                 Debug.LogWarning("CreatePanel::>> " + name + " " + prefab);
             });
 #else
-            GameObject prefab = ResManager.LoadAsset<GameObject>(name, assetName);
+			GameObject prefab = ResManager.LoadAsset<GameObject>(name, assetName,AppConst.PrefabExt);
             if (prefab == null) return;
 
             GameObject go = Instantiate(prefab) as GameObject;

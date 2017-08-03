@@ -58,7 +58,7 @@ namespace PSDUIImporter
             }
             else
             {
-                fontFolder = fontFolder = PSDImporterConst.FONT_FOLDER; 
+                fontFolder = PSDImporterConst.FONT_FOLDER; 
             }
             string fontFullName = fontFolder + image.arguments[1] + PSDImporterConst.FONT_SUFIX;
             Debug.Log("font name ; " + fontFullName);
