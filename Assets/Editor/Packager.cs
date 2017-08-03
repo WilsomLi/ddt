@@ -328,4 +328,25 @@ public class Packager {
         }
         AssetDatabase.Refresh();
     }
+    
+    [MenuItem("Custom/Android/Build Monitor",false,15)]
+    public static void BuildMonitorAndroid()
+    {
+        //BuildLuaResource.BuildLua(false,BuildTarget.Android);
+        PlayerSettings.SetScriptingDefinesSymbolsForGroup(BuildTargetGroup.Android,"UNITY_3D;RES_USE_ASSEtBUNDLE");
+        PlayerSettings.SetUseDefaultGraphicsAPI(BuildTarget.StandaloneWindows,false);
+        UnityEngine.Rendering.GraphicsDeviceType[] api = new UnityEngine.Rendering.GraphicsDeviceType[3];
+        api[1] = UnityEngine.Rendering.GraphicsDeviceType.OpenGLES2;
+        api[1] = UnityEngine.Rendering.GraphicsDeviceType.Direct3D11;
+        api[1] = UnityEngine.Rendering.GraphicsDeviceType.Direct3D9;
+        PlayerSettings.SetGraphicsAPIs(BuildTarget.StandaloneWindows,api);
+    }
+    
+    [MenuItem("Custom/Android/Editor",false,15)]
+    public static void BuildMonitorEditor()
+    {
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android,"UNITY_3D")   ;
+        PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.StandaloneWindows,true);
+    }
+        
 }
