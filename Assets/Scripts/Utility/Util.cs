@@ -217,11 +217,12 @@ namespace LuaFramework {
 	public static string GetAssetPath(string fileName) {
 		int index = fileName.LastIndexOf(".");
 		string name = fileName.Substring(0,index);
-		string ext = fileName.Substring(index+1);
-		string type = ext == "png" ? "texture2D" : ext;
-		string[] guids = AssetDatabase.FindAssets (name + " t:"+ext);
-		if(guids.Length > 0) {
-			return guids[0];
+		string[] guids = AssetDatabase.FindAssets (name);
+		for(int i=0; i<guids.Length; i++) {
+			string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+			if(path.SubString(path.LastIndexOf("/")+1) == fileName) {
+				return path;
+			}
 		}
 		return fileName;
 	}
