@@ -270,9 +270,9 @@
      <Compile Include="Assets\ToLua\Source\Generate\ViewWrap.cs" />
      <Compile Include="Assets\ToLua\Source\LuaConst.cs" />
      <None Include="Assets\UI\Panels\scrollpanel\scrollpanel.xml" />
-     <None Include="Assets\StreamingAssets\files.txt" />
      <None Include="Assets\link.xml" />
      <None Include="Assets\ToLua\readme.txt" />
+     <None Include="Assets\StreamingAssets\files.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
