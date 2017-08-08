@@ -40,7 +40,7 @@ function import(moduleName, currentModuleName)
                 currentModuleName = v
             end
 
-            print(currentModuleName,string.find(currentModuleName,"/"))
+            -- print(currentModuleName,string.find(currentModuleName,"/"))
             if string.find(currentModuleName,"/") ~= nil then
                 currentModuleNameParts = string.split(currentModuleName, "/") --Mac
             else

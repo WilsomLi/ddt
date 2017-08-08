@@ -116,7 +116,7 @@ namespace LuaInterface
             OpenBaseLibs();
             LuaSetTop(0);
             InitLuaPath();
-            Debugger.Log("Init lua state cost: {0}", Time.realtimeSinceStartup - time);
+//            Debugger.Log("Init lua state cost: {0}", Time.realtimeSinceStartup - time);
         }        
 
         void OpenBaseLibs()
@@ -213,7 +213,7 @@ namespace LuaInterface
 #if UNITY_EDITOR
             beStart = true;
 #endif
-            Debugger.Log("LuaState start");
+//            Debugger.Log("LuaState start");
             OpenBaseLuaLibs();
             PackBounds = GetFuncRef("Bounds.New");
             UnpackBounds = GetFuncRef("Bounds.Get");

@@ -2,7 +2,7 @@
 require "Common/define"
 require "Common/protocal"
 require "Common/functions"
-Event = require 'events'
+local Event = require 'Common/events'
 
 require "3rd/pblua/login_pb"
 require "3rd/pbc/protobuf"

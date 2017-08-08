@@ -20,8 +20,6 @@ public class LuaFramework_UtilWrap
 		L.RegFunction("ClearChild", ClearChild);
 		L.RegFunction("ClearMemory", ClearMemory);
 		L.RegFunction("GetRelativePath", GetRelativePath);
-		L.RegFunction("GetAssetPath", GetAssetPath);
-		L.RegFunction("GetBuildTargetGroup", GetBuildTargetGroup);
 		L.RegFunction("GetFileText", GetFileText);
 		L.RegFunction("AppContentPath", AppContentPath);
 		L.RegFunction("Log", Log);
@@ -321,39 +319,6 @@ public class LuaFramework_UtilWrap
 			ToLua.CheckArgsCount(L, 0);
 			string o = LuaFramework.Util.GetRelativePath();
 			LuaDLL.lua_pushstring(L, o);
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetAssetPath(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			string arg0 = ToLua.CheckString(L, 1);
-			string o = LuaFramework.Util.GetAssetPath(arg0);
-			LuaDLL.lua_pushstring(L, o);
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetBuildTargetGroup(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 0);
-			UnityEditor.BuildTargetGroup o = LuaFramework.Util.GetBuildTargetGroup();
-			ToLua.Push(L, o);
 			return 1;
 		}
 		catch (Exception e)

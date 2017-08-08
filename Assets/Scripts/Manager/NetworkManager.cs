@@ -10,6 +10,8 @@ namespace LuaFramework {
         static readonly object m_lockObject = new object();
         static Queue<KeyValuePair<int, ByteBuffer>> mEvents = new Queue<KeyValuePair<int, ByteBuffer>>();
 
+		private uint m_messageIndex = 0;
+
         SocketClient SocketClient {
             get { 
                 if (socket == null)
@@ -81,5 +83,12 @@ namespace LuaFramework {
             SocketClient.OnRemove();
             Debug.Log("~NetworkManager was destroy");
         }
+
+		public void Send(int id, string name, LuaTable tb)
+		{
+			if (SocketClient.State == SocketClient.ConnectState.DisConnect)
+				return;
+			
+		}
     }
 }

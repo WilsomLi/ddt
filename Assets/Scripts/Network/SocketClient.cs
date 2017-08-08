@@ -20,7 +20,18 @@ public class SocketClient {
 
     private const int MAX_READ = 8192;
     private byte[] byteBuffer = new byte[MAX_READ];
-    public static bool loggedIn = false;
+
+	public enum ConnectState
+	{
+		Connect,
+		DisConnect,
+	}
+	private ConnectState state = ConnectState.DisConnect;
+	public ConnectState State {
+		get {
+			return state;
+		}
+	}
 
     // Use this for initialization
     public SocketClient() {
@@ -63,7 +74,11 @@ public class SocketClient {
             client.SendTimeout = 1000;
             client.ReceiveTimeout = 1000;
             client.NoDelay = true;
-            client.BeginConnect(host, port, new AsyncCallback(OnConnect), null);
+            var resultt = client.BeginConnect(host, port, new AsyncCallback(OnConnect), null);
+			if(!resultt.AsyncWaitHandle.WaitOne(3000))
+			{
+				state = ConnectState.DisConnect;
+			}
         } catch (Exception e) {
             Close(); Debug.LogError(e.Message);
         }
@@ -76,6 +91,7 @@ public class SocketClient {
         outStream = client.GetStream();
         client.GetStream().BeginRead(byteBuffer, 0, MAX_READ, new AsyncCallback(OnRead), null);
         NetworkManager.AddEvent(Protocal.Connect, new ByteBuffer());
+		state = ConnectState.Connect;
     }
 
     /// <summary>
@@ -104,6 +120,10 @@ public class SocketClient {
     /// 读取消息
     /// </summary>
     void OnRead(IAsyncResult asr) {
+		if (client == null || state == ConnectState.DisConnect) {
+			return;
+		}
+
         int bytesRead = 0;
         try {
             lock (client.GetStream()) {         //读取字节流到缓冲区
@@ -222,11 +242,11 @@ public class SocketClient {
     /// 关闭链接
     /// </summary>
     public void Close() {
+		state = ConnectState.DisConnect;
         if (client != null) {
             if (client.Connected) client.Close();
             client = null;
         }
-        loggedIn = false;
     }
 
     /// <summary>

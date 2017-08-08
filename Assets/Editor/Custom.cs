@@ -28,13 +28,13 @@ public class Custom
 	[MenuItem("Custom/Mode/NONE",false,15)]
 	public static void SetModeNone()
 	{
-		PlayerSettings.SetScriptingDefineSymbolsForGroup(Util.GetBuildTargetGroup (),"");
+		PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUtil.GetBuildTargetGroup (),"");
 	}
 
 	[MenuItem("Custom/Mode/USE_ASSETBUNDLE",false,15)]
 	public static void SetModeUseAssetBundle()
 	{
-		BuildTargetGroup group = Util.GetBuildTargetGroup ();
+		BuildTargetGroup group = EditorUtil.GetBuildTargetGroup ();
 		string def = PlayerSettings.GetScriptingDefineSymbolsForGroup (group);
 		def += "USE_ASSETBUNDLE;";
 		PlayerSettings.SetScriptingDefineSymbolsForGroup(group,def);
@@ -43,7 +43,7 @@ public class Custom
 	[MenuItem("Custom/Mode/ASYNC_MODE",false,15)]
 	public static void SetModeAsync()
 	{
-		BuildTargetGroup group = Util.GetBuildTargetGroup ();
+		BuildTargetGroup group = EditorUtil.GetBuildTargetGroup ();
 		string def = PlayerSettings.GetScriptingDefineSymbolsForGroup (group);
 		def += "ASYNC_MODE;";
 		PlayerSettings.SetScriptingDefineSymbolsForGroup(group,def);

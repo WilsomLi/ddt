@@ -13,7 +13,6 @@ local print_r = require "3rd/sproto/print_r"
 require "Common/functions"
 require "Common/class"
 
-require "Logic/LuaClass"
 require "Module/ModuleInit"
 require "Logic/UI/UIManager"
 require "Logic/CtrlManager"
@@ -30,11 +29,11 @@ local transform;
 local gameObject;
 local WWW = UnityEngine.WWW;
 
-function Game.InitViewPanels()
-	for i = 1, #PanelNames do
-		require ("View/"..tostring(PanelNames[i]))
-	end
-end
+-- function Game.InitViewPanels()
+-- 	for i = 1, #PanelNames do
+-- 		require ("View/"..tostring(PanelNames[i]))
+-- 	end
+-- end
 
 --初始化完成，发送链接服务器信息--
 function Game.OnInitOK()
@@ -43,7 +42,7 @@ function Game.OnInitOK()
     -- networkMgr:SendConnect();
 
     -- --注册LuaView--
-    this.InitViewPanels();
+    -- this.InitViewPanels();
 
     -- this.test_class_func();
     -- this.test_pblua_func();
@@ -53,15 +52,15 @@ function Game.OnInitOK()
     -- this.test_sproto_func();
     -- coroutine.start(this.test_coroutine);
 
-    CtrlManager.Init();
-    local ctrl = CtrlManager.GetCtrl(CtrlNames.Prompt);
-    print("ExampleMode",tostring(AppConst.ExampleMode))
-    if ctrl ~= nil and AppConst.ExampleMode == 1 then
-        ctrl:Awake();
-    end
+    -- CtrlManager.Init();
+    -- local ctrl = CtrlManager.GetCtrl(CtrlNames.Prompt);
+    -- print("ExampleMode",tostring(AppConst.ExampleMode))
+    -- if ctrl ~= nil and AppConst.ExampleMode == 1 then
+    --     ctrl:Awake();
+    -- end
 
-    -- UIManager.Init()
-    -- UIManager.OpenPanel(UIConst.Login)
+    UIManager.Init()
+    UIManager.OpenPanel(UIConst.Login)
        
     logWarn('LuaFramework InitOK--->>>');
 end
@@ -146,7 +145,13 @@ end
 
 --测试lua类--
 function Game.test_class_func()
-    LuaClass:New(10, 20):test();
+    local t1 = LuaClass:New(10, 20)
+    t1:test();
+
+    local t2 = LuaClass:New(50, 100)
+    t2:test();
+
+    t1:test();
 end
 
 --测试pblua--

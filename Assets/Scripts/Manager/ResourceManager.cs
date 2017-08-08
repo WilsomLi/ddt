@@ -281,7 +281,7 @@ namespace LuaFramework {
         /// </summary>
 		public T LoadAsset<T>(string abname, string assetname, string ext) where T : UnityEngine.Object {
 #if UNITY_EDITOR && ! USE_ASSETBUNDLE
-			string path = Util.GetAssetPath(assetname+ext);
+			string path = EditorUtil.GetAssetPath(assetname+ext);
 			return AssetDatabase.LoadAssetAtPath<T>(path);
 #else
             abname = abname.ToLower();
@@ -383,7 +383,7 @@ namespace LuaFramework {
         void OnDestroy() {
             if (shared != null) shared.Unload(true);
             if (manifest != null) manifest = null;
-            Debug.Log("~ResourceManager was destroy!");
+//            Debug.Log("~ResourceManager was destroy!");
         }
     }
 }
