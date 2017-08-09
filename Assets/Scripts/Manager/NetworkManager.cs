@@ -37,7 +37,7 @@ namespace LuaFramework {
         }
 
         /// <summary>
-        /// Ö´ĞĞLua·½·¨
+        /// æ‰§è¡ŒLuaæ–¹æ³•
         /// </summary>
         public object[] CallMethod(string func, params object[] args) {
             return Util.CallMethod("Network", func, args);
@@ -51,7 +51,7 @@ namespace LuaFramework {
         }
 
         /// <summary>
-        /// ½»¸øCommand£¬ÕâÀï²»Ïë¹ØĞÄ·¢¸øË­¡£
+        /// äº¤ç»™Commandï¼Œè¿™é‡Œä¸æƒ³å…³å¿ƒå‘ç»™è°ã€‚
         /// </summary>
         void Update() {
             if (mEvents.Count > 0) {
@@ -63,21 +63,21 @@ namespace LuaFramework {
         }
 
         /// <summary>
-        /// ·¢ËÍÁ´½ÓÇëÇó
+        /// å‘é€é“¾æ¥è¯·æ±‚
         /// </summary>
         public void SendConnect() {
             SocketClient.SendConnect();
         }
 
         /// <summary>
-        /// ·¢ËÍSOCKETÏûÏ¢
+        /// å‘é€SOCKETæ¶ˆæ¯
         /// </summary>
         public void SendMessage(ByteBuffer buffer) {
             SocketClient.SendMessage(buffer);
         }
 
         /// <summary>
-        /// Îö¹¹º¯Êı
+        /// ææ„å‡½æ•°
         /// </summary>
         public void OnDestroy() {
             SocketClient.OnRemove();
@@ -88,7 +88,49 @@ namespace LuaFramework {
 		{
 			if (SocketClient.State == SocketClient.ConnectState.DisConnect)
 				return;
+			var msg = ProtocolGroup.GetMsg(name);
+			if(msg == null) {
+				Debug.Log(String.Format("protocol {0} not exist",name));
+				return
+			}
 			
+			m_messageIndex ++;
+			ByteBuffer protoBuff = new ByteBuffer();
+			ProtocolReadWriter.Req(msg.Id,buff,tb,ProtocolGroup);
+			byteBuffer buff = new ByteBuffer();
+			buff.WriteUshort(msg.Id);
+			buff.WriteBytes(protoBuff.ToBytes());
+			protoBuff.Close();
+			
+			byte[] buffBytes = buff.ToBytes();
+			ByteBuffer contentBuff = new ByteBuffer();
+			contentBuff.WriteVchar((uint)buffBytes.Length);
+			contentBuff.WriteBytes(buffBytes);
+			
+			ByteBuffer sendBuff = new ByteBuffer();
+			sendBuff.WriteUint(Convert.ToUInt32(buffBytes.Length) + 16);
+			
+			//CRC
+			uint crc = CRC.GetCrc32(buffBytes);
+			sendBuffer.WriteUint(crc);
+			
+			//Time
+			uint timeUint = TimeSpanUtils.ConvertDateTimeToUInt(DateTime.Now);
+			ByteBuffer desBuff = new ByteBuffer();
+			desBuff.WriteBytes(BitConverter.GetBytes(timeUint));
+			desBuff.WriteBytes(BitConverter.GetBytes(m_messageIndex));
+			
+			//DES
+			ulong des = BitConverter.ToUInt64(desBuff.ToBytes(),0);
+			byte[] desBytes = DES.Encrypt(bitConverter.GetBytes(des));
+			
+			sendBuff.WriteUlong(BitConverter.ToUInt64(desBytes,0));
+			sendBuff.WriteBytes(buffBytes);
+			client.SendMessage(sendBuff);
+			
+			contentBuff.Close();
+			desBuff.Close();
+			buff.Close();
 		}
     }
 }
