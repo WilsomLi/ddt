@@ -1,6 +1,14 @@
 
 local BasePanel = class("BasePanel")
 
+function BasePanel:ShowPanel(args)
+		
+end
+
+functio BasePanel:Close()
+
+end
+
 function BasePanel:MapNode(cfg)
 	for k,v in pairs(cfg) do
 		local tf = self.transform:Find(v.path)
