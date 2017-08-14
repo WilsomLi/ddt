@@ -12,3 +12,7 @@ function OnLevelWasLoaded(level)
 	collectgarbage("collect")
 	Time.timeSinceLevelLoad = 0
 end
+
+os.exit = function()
+    UnityEngine.Application.Quit()
+end
